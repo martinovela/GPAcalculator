@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>GPA Calculator Indonesia</h2>
+<h2 id="ipk"></h2>
+
+<table>
+  <tr>
+    <td>Nilai Maksimal</td>
+    <td>:</td>
+    <td><input type="text" id="max" value="10"></td>
+    
+  </tr>
+  <tr>
+  	<td>Nilai Minimal</td>
+    <td>:</td>
+    <td><input type="text" id="min" value="5"></td>
+  </tr>
+  <tr>
+    <td>Jenjang</td>
+    <td>:</td>
+    <td>
+    <select id="jenjang">
+      <option value="D1">D1</option>
+      <option value="D2">D2</option>
+      <option value="D3">D3</option>
+      <option value="D4">D4</option>
+      <option value="S1">S1</option>
+      <option value="Profesi">Profesi</option>
+      <option value="S2">S2</option>
+      <option value="Spesialis">Spesialis</option>
+      <option value="S3">S3</option>
+    </select>
+    </td>
+  </tr>
+</table>
+<br><br>
+
+<table style="width:30%">
+  <tr>
+    <th>Course</th>
+    <th>Credit</th> 
+    <th>Grade</th>
+  </tr>
+  <tr>
+    <td><input type="text" id="course1" value="A"></td>
+    <td><input type="text" id="credit1" value="10"></td>
+    <td><input type="text" id="grade1" value="7.5"></td>
+  </tr>
+  <tr>
+    <td><input type="text" id="course2" value="B"></td>
+    <td><input type="text" id="credit2" value="10"></td>
+    <td><input type="text" id="grade2" value="7"></td>
+  </tr>
+  <tr>
+    <td><input type="text" id="course3" value="C"></td>
+    <td><input type="text" id="credit3" value="10"></td>
+    <td><input type="text" id="grade3" value="7.5"></td>
+  </tr>
+  <tr>
+    <td><input type="text" id="course4" value="D"></td>
+    <td><input type="text" id="credit4" value="10"></td>
+    <td><input type="text" id="grade4" value="7"></td>
+  </tr>
+</table>
+<input type="submit" value='Add Course'>
+<br><br>
+<button onclick="pressButton()">Konversi</button>
+
+<p>Your IPK: <span id="convertedIpk"></span></p>
+<p><span id="predikatIpk"></span>
+
+</body>
+<script type="text/javascript">
+  function p(float) {
+    if (float){
+      return parseFloat(float)
+    }
+    return 0
+  }
+
+  function hitungIPK(listSks, listNilai) {
+    var totalSksKaliNilai = 0, totalSks = 0;
+    for (i = 0; i < listSks.length; i++) {
+      sks = listSks[i];
+      nilai = listNilai[i];
+      totalSksKaliNilai += (sks * nilai);
+      totalSks += sks;
+    }
+    console.log("totalSksKaliNilai", totalSksKaliNilai)
+    console.log("totalSks", totalSks)
+    return totalSksKaliNilai / totalSks;
+  }
+
+  function getA2(jenjang) {
+    var dua = ["D1", "D2", "D3", "D4", "S1"];
+    var tiga = ["Profesi", "S2", "Spesialis", "S3"];
+    if (dua.includes(jenjang)) {
+      return 2;
+    }
+    if (tiga.includes(jenjang)) {
+      return 3;
+    }
+    return -1;
+  }
+
+  function getPredikat(GPA, jenjang) {
+    console.log("nol", jenjang, GPA)
+    var dua = ["D1", "D2", "D3", "D4", "S1"];
+    var tiga = ["Profesi", "S2", "Spesialis", "S3"];
+    if (dua.includes(jenjang)) {
+      console.log("satu", jenjang)
+      return getPredikatBachelor(GPA);
+    }
+    if (tiga.includes(jenjang)) {
+      console.log("dua", jenjang)
+      return getPredikatMaster(GPA);
+    }
+    return -1;
+  }
+
+  function getPredikatMaster(GPA) {
+    console.log("bachelor", GPA)
+    if (GPA >= 3.75 && GPA <=4) {
+      return "CUM LAUDE";
+    }
+    if (GPA >= 3.51 && GPA <=3.74) {
+      return "SANGAT MEMUASKAN";
+    }
+    if (GPA >= 3 && GPA <= 3.5){
+      return "MEMUASKAN";
+    }
+    return "GAGAL";
+  }
+
+  function getPredikatBachelor(GPA) {
+    console.log("master", GPA)
+    if (GPA >= 3.51 && GPA <=4) {
+      return "CUM LAUDE";
+    }
+    if (GPA >= 2.76 && GPA <=3.5) {
+      return "SANGAT MEMUASKAN";
+    }
+    if (GPA >= 2 && GPA <= 2.75){
+      return "MEMUASKAN";
+    }
+    return "GAGAL";
+  }
+
+  function convertIPK(ipkLuar, nilaiMax, nilaiMin, jenjang) {
+    var a1 = 4, a2 = getA2(jenjang);
+    return ((ipkLuar - nilaiMin) * (a1 - a2) / (nilaiMax - nilaiMin)) + (a2)
+  }
+
+  function pressButton() {
+    var listSks = [
+      p(document.getElementById("credit1").value),
+      p(document.getElementById("credit2").value),
+      p(document.getElementById("credit3").value),
+      p(document.getElementById("credit4").value)
+    ]
+    var listNilai = [
+      p(document.getElementById("grade1").value),
+      p(document.getElementById("grade2").value),
+      p(document.getElementById("grade3").value),
+      p(document.getElementById("grade4").value)
+    ]
+
+    var jenjang = document.getElementById("jenjang").value
+    var min = p(document.getElementById("min").value)
+    var max = p(document.getElementById("max").value)
+
+    var ipk = hitungIPK(listSks, listNilai)
+    convertedIpk = convertIPK(ipk, max, min, jenjang)
+    document.getElementById("convertedIpk").innerHTML = convertedIpk.toFixed(2)
+    console.log("ending", convertedIpk, jenjang)
+    predikatIpk = getPredikat(convertedIpk, jenjang)
+    document.getElementById("predikatIpk").innerHTML = predikatIpk
+  }
+</script>
+</html>
+
+
