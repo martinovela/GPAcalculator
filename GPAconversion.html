@@ -10,7 +10,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: url(https://cdn.pixabay.com/photo/2015/08/08/00/07/graduation-879941_1280.jpg);
+  /*background: url(https://cdn.pixabay.com/photo/2015/08/08/00/07/graduation-879941_1280.jpg);*/
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -26,8 +26,8 @@ h1 {
 .form-2 {
     /* Size and position */
     width: 500px;
-    margin: 60px auto 30px;
-    padding: 15px;
+    margin: 30px auto 30px;
+    padding: 10px;
     position: relative;
 
     /* Styles */
@@ -154,27 +154,27 @@ input[type="submit"] {
       <th></th>
   </tr>
   <tr>
-    <td><input type="text" id="course1" value="A"></td>
-    <td><input type="text" id="credit1" value="10"></td>
-    <td><input type="text" id="grade1" value="7.5"></td>
+    <td><input type="text" id="course1" value=""></td>
+    <td><input type="text" id="credit1" value=""></td>
+    <td><input type="text" id="grade1" value=""></td>
       <td><a href="javascript:void(0);" style="font-size: 11px;" onclick="removeRow(this)">Delete</a></td>
   </tr>
   <tr>
-    <td><input type="text" id="course2" value="B"></td>
-    <td><input type="text" id="credit2" value="10"></td>
-    <td><input type="text" id="grade2" value="7"></td>
+    <td><input type="text" id="course2" value=""></td>
+    <td><input type="text" id="credit2" value=""></td>
+    <td><input type="text" id="grade2" value=""></td>
       <td><a href="javascript:void(0);" style="font-size: 11px;" onclick="removeRow(this)">Delete</a></td>
   </tr>
   <tr>
-    <td><input type="text" id="course3" value="C"></td>
-    <td><input type="text" id="credit3" value="10"></td>
-    <td><input type="text" id="grade3" value="7.5"></td>
+    <td><input type="text" id="course3" value=""></td>
+    <td><input type="text" id="credit3" value=""></td>
+    <td><input type="text" id="grade3" value=""></td>
       <td><a href="javascript:void(0);" style="font-size: 11px;" onclick="removeRow(this)">Delete</a></td>
   </tr>
   <tr>
-    <td><input type="text" id="course4" value="D"></td>
-    <td><input type="text" id="credit4" value="10"></td>
-    <td><input type="text" id="grade4" value="7"></td>
+    <td><input type="text" id="course4" value=""></td>
+    <td><input type="text" id="credit4" value=""></td>
+    <td><input type="text" id="grade4" value=""></td>
       <td><a href="javascript:void(0);" style="font-size: 11px;" onclick="removeRow(this)">Delete</a></td>
   </tr>
 </table>
@@ -266,9 +266,15 @@ input[type="submit"] {
     return "GAGAL";
   }
 
-  function convertIPK(ipkLuar, nilaiMax, nilaiMin, jenjang) {
+   function convertIPK(ipkLuar, nilaiMax, nilaiMin, jenjang) {
     var a1 = 4, a2 = getA2(jenjang);
-    return ((ipkLuar - nilaiMin) * (a1 - a2) / (nilaiMax - nilaiMin)) + (a2)
+    if (nilaiMax < nilaiMin){
+        var tmp = a1;
+        a1 = a2;
+        a2 = tmp;
+        return (((ipkLuar - nilaiMax) * (a1 - a2)) / (nilaiMin - nilaiMax)) + (a2);
+    }
+    return (((ipkLuar - nilaiMin) * (a1 - a2)) / (nilaiMax - nilaiMin)) + (a2);
   }
 
   function pressButton() {
