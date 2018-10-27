@@ -357,7 +357,7 @@ input[type="submit"] {
       var min = p(document.getElementById("min").value)
       var max = p(document.getElementById("max").value)
 
-      var ipk = hitungIPK(allGrades, allGrades)
+      var ipk = hitungIPK(allCredits, allGrades)
       convertedIpk = convertIPK(ipk, max, min, jenjang)
       document.getElementById("convertedIpk").innerHTML = convertedIpk.toFixed(2)
       console.log("ending", convertedIpk, jenjang)
