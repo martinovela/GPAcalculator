@@ -178,7 +178,16 @@ input[type="submit"] {
       <td><a href="javascript:void(0);" style="font-size: 11px;" onclick="removeRow(this)">Delete</a></td>
   </tr>
 </table>
-<input type="submit" value='Add Course' onclick="addRow()">
+<table>
+  <tr>
+    <td>
+      <input type="submit" value='Add Course' onclick="addRow()">
+    </td>
+    <td>
+      <input type="number" id="sumOfRow" value="" placeholder="Number of rows to add" max="50" min="1">
+    </td>
+  </tr>
+</table>
 <br><br>
 
 
@@ -306,6 +315,25 @@ input[type="submit"] {
   }
 
   function addRow(){
+      var sumOfRow = 1;
+      console.log("add", sumOfRow)
+      if (document.getElementById("sumOfRow").value){
+        console.log("msauk", document.getElementById("sumOfRow"))
+        sumOfRow = document.getElementById("sumOfRow").value;
+      }
+
+      for (i = 0; i < sumOfRow; i++) {
+        rows()
+      }
+
+      
+ 
+      
+
+  }
+
+  function rows(){
+      document.getElementById("sumOfRow")
       var table = document.getElementById("Table1");
 
       var rowCount = table.rows.length;
