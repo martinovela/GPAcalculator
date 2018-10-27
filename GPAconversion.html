@@ -37,36 +37,41 @@
 </table>
 <br><br>
 
-<table style="width:30%">
+<table style="width:30%" id="Table1">
   <tr>
     <th>Course</th>
     <th>Credit</th> 
     <th>Grade</th>
+      <th></th>
   </tr>
   <tr>
     <td><input type="text" id="course1" value="A"></td>
     <td><input type="text" id="credit1" value="10"></td>
     <td><input type="text" id="grade1" value="7.5"></td>
+      <td><a href="javascript:void(0);" style="font-size: 11px;" onclick="removeRow(this)">Delete</a></td>
   </tr>
   <tr>
     <td><input type="text" id="course2" value="B"></td>
     <td><input type="text" id="credit2" value="10"></td>
     <td><input type="text" id="grade2" value="7"></td>
+      <td><a href="javascript:void(0);" style="font-size: 11px;" onclick="removeRow(this)">Delete</a></td>
   </tr>
   <tr>
     <td><input type="text" id="course3" value="C"></td>
     <td><input type="text" id="credit3" value="10"></td>
     <td><input type="text" id="grade3" value="7.5"></td>
+      <td><a href="javascript:void(0);" style="font-size: 11px;" onclick="removeRow(this)">Delete</a></td>
   </tr>
   <tr>
     <td><input type="text" id="course4" value="D"></td>
     <td><input type="text" id="credit4" value="10"></td>
     <td><input type="text" id="grade4" value="7"></td>
+      <td><a href="javascript:void(0);" style="font-size: 11px;" onclick="removeRow(this)">Delete</a></td>
   </tr>
 </table>
-<input type="submit" value='Add Course'>
+<input type="submit" value='Add Course' onclick="addRow()">
 <br><br>
-<button onclick="pressButton()">Konversi</button>
+<button onclick="calculateGPA()">Konversi</button>
 
 <p>Your IPK: <span id="convertedIpk"></span></p>
 <p><span id="predikatIpk"></span>
@@ -167,6 +172,8 @@
       p(document.getElementById("grade4").value)
     ]
 
+      console.log(listSks, listNilai)
+
     var jenjang = document.getElementById("jenjang").value
     var min = p(document.getElementById("min").value)
     var max = p(document.getElementById("max").value)
@@ -177,6 +184,73 @@
     console.log("ending", convertedIpk, jenjang)
     predikatIpk = getPredikat(convertedIpk, jenjang)
     document.getElementById("predikatIpk").innerHTML = predikatIpk
+  }
+
+  function addRow(){
+      var table = document.getElementById("Table1");
+
+      var rowCount = table.rows.length;
+      var row = table.insertRow(rowCount);
+
+      var cell2 = row.insertCell(0);
+      var element2 = document.createElement("input");
+      element2.type = "text";
+      cell2.appendChild(element2);
+
+      var cell3 = row.insertCell(1);
+      var element3 = document.createElement("input");
+      element3.type = "text";
+      cell3.appendChild(element3);
+
+      var cell4 = row.insertCell(2);
+      var element4 = document.createElement("input");
+      element4.type = "text";
+      cell4.appendChild(element4);
+
+      var cell5 = row.insertCell(3);
+      var element5 = document.createElement("a");
+      element5.setAttribute("href", "javascript:void(0);");
+      element5.onclick = function () { removeRow(this) };
+      element5.style.fontSize = "11px";
+      var linkText = document.createTextNode("Delete");
+      element5.appendChild(linkText);
+      cell5.appendChild(element5);
+  }
+
+  function removeRow(r) {
+      console.log(r)
+      var i = r.parentNode.parentNode.rowIndex;
+      var tbl = document.getElementById("Table1");
+      tbl.deleteRow(i);
+  }
+
+  function calculateGPA(){
+      var table = document.getElementById('Table1');
+      var rowCount = table.rows.length;
+      var allCredits = [];
+      var allGrades = [];
+
+      for (var i = 1; i < rowCount; i++) {
+          var credits = p(table.rows[i].cells[1].children[0].value);
+          var grades = p(table.rows[i].cells[2].children[0].value);
+
+          allCredits.push(credits);
+          allGrades.push(grades)
+      }
+
+      console.log(allCredits,allGrades);
+
+      var jenjang = document.getElementById("jenjang").value
+      var min = p(document.getElementById("min").value)
+      var max = p(document.getElementById("max").value)
+
+      var ipk = hitungIPK(allGrades, allGrades)
+      convertedIpk = convertIPK(ipk, max, min, jenjang)
+      document.getElementById("convertedIpk").innerHTML = convertedIpk.toFixed(2)
+      console.log("ending", convertedIpk, jenjang)
+      predikatIpk = getPredikat(convertedIpk, jenjang)
+      document.getElementById("predikatIpk").innerHTML = predikatIpk
+
   }
 </script>
 </html>
