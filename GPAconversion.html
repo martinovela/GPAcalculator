@@ -192,29 +192,29 @@
       var rowCount = table.rows.length;
       var row = table.insertRow(rowCount);
 
-      var cell2 = row.insertCell(0);
+      var cell1 = row.insertCell(0);
+      var element1 = document.createElement("input");
+      element1.type = "text";
+      cell1.appendChild(element1);
+
+      var cell2 = row.insertCell(1);
       var element2 = document.createElement("input");
       element2.type = "text";
       cell2.appendChild(element2);
 
-      var cell3 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
       var element3 = document.createElement("input");
       element3.type = "text";
       cell3.appendChild(element3);
 
-      var cell4 = row.insertCell(2);
-      var element4 = document.createElement("input");
-      element4.type = "text";
-      cell4.appendChild(element4);
-
-      var cell5 = row.insertCell(3);
-      var element5 = document.createElement("a");
-      element5.setAttribute("href", "javascript:void(0);");
-      element5.onclick = function () { removeRow(this) };
-      element5.style.fontSize = "11px";
+      var cell4 = row.insertCell(3);
+      var element4 = document.createElement("a");
+      element4.setAttribute("href", "javascript:void(0);");
+      element4.onclick = function () { removeRow(this) };
+      element4.style.fontSize = "11px";
       var linkText = document.createTextNode("Delete");
-      element5.appendChild(linkText);
-      cell5.appendChild(element5);
+      element4.appendChild(linkText);
+      cell4.appendChild(element4);
   }
 
   function removeRow(r) {
