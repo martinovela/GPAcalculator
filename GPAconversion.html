@@ -110,7 +110,7 @@ input[type="submit"] {
   text-decoration: none;
 }
   </style>
-<body>
+<body onLoad="disableClick()">
 
     <div style="text-align:center"><h2><strong>GPA Calculator</strong> Indonesia</h2></div>
 <div class="form-2">
@@ -217,7 +217,11 @@ input[type="submit"] {
     }
     console.log("totalSksKaliNilai", totalSksKaliNilai)
     console.log("totalSks", totalSks)
-    return totalSksKaliNilai / totalSks;
+    var ipk = totalSksKaliNilai / totalSks
+    if (totalSks == 0){
+        ipk = 0;
+    } 
+    return ipk;
   }
 
   function getA2(jenjang) {
@@ -277,6 +281,7 @@ input[type="submit"] {
 
    function convertIPK(ipkLuar, nilaiMax, nilaiMin, jenjang) {
     var a1 = 4, a2 = getA2(jenjang);
+    console.log("ini dia", ipkLuar, nilaiMax, nilaiMin, jenjang, a1,a2)
     if (nilaiMax < nilaiMin){
         var tmp = a1;
         a1 = a2;
@@ -286,33 +291,33 @@ input[type="submit"] {
     return (((ipkLuar - nilaiMin) * (a1 - a2)) / (nilaiMax - nilaiMin)) + (a2);
   }
 
-  function pressButton() {
-    var listSks = [
-      p(document.getElementById("credit1").value),
-      p(document.getElementById("credit2").value),
-      p(document.getElementById("credit3").value),
-      p(document.getElementById("credit4").value)
-    ]
-    var listNilai = [
-      p(document.getElementById("grade1").value),
-      p(document.getElementById("grade2").value),
-      p(document.getElementById("grade3").value),
-      p(document.getElementById("grade4").value)
-    ]
+  // function pressButton() {
+  //   var listSks = [
+  //     p(document.getElementById("credit1").value),
+  //     p(document.getElementById("credit2").value),
+  //     p(document.getElementById("credit3").value),
+  //     p(document.getElementById("credit4").value)
+  //   ]
+  //   var listNilai = [
+  //     p(document.getElementById("grade1").value),
+  //     p(document.getElementById("grade2").value),
+  //     p(document.getElementById("grade3").value),
+  //     p(document.getElementById("grade4").value)
+  //   ]
 
-      console.log(listSks, listNilai)
+  //     console.log(listSks, listNilai)
 
-    var jenjang = document.getElementById("jenjang").value
-    var min = p(document.getElementById("min").value)
-    var max = p(document.getElementById("max").value)
+  //   var jenjang = document.getElementById("jenjang").value
+  //   var min = p(document.getElementById("min").value)
+  //   var max = p(document.getElementById("max").value)
 
-    var ipk = hitungIPK(listSks, listNilai)
-    convertedIpk = convertIPK(ipk, max, min, jenjang)
-    document.getElementById("convertedIpk").innerHTML = convertedIpk.toFixed(2)
-    console.log("ending", convertedIpk, jenjang)
-    predikatIpk = getPredikat(convertedIpk, jenjang)
-    document.getElementById("predikatIpk").innerHTML = predikatIpk
-  }
+  //   var ipk = hitungIPK(listSks, listNilai)
+  //   convertedIpk = convertIPK(ipk, max, min, jenjang)
+  //   document.getElementById("convertedIpk").innerHTML = convertedIpk.toFixed(2)
+  //   console.log("ending", convertedIpk, jenjang)
+  //   predikatIpk = getPredikat(convertedIpk, jenjang)
+  //   document.getElementById("predikatIpk").innerHTML = predikatIpk
+  // }
 
   function addRow(){
       var sumOfRow = 1;
@@ -392,6 +397,7 @@ input[type="submit"] {
       var max = p(document.getElementById("max").value)
 
       var ipk = hitungIPK(allCredits, allGrades)
+      console.log("ipknya ini dia", ipk)
       convertedIpk = convertIPK(ipk, max, min, jenjang)
       document.getElementById("convertedIpk").innerHTML = convertedIpk.toFixed(2)
       console.log("ending", convertedIpk, jenjang)
